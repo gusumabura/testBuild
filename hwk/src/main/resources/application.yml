@@ -1,0 +1,12 @@
+server:
+  error:
+    whitelabel:
+      enabled: true
+  compression:
+    enabled: true
+    mime-types: application/json
+spring:
+  mustache:
+    expose-request-attributes: true
+    prefix: classpath:/templates/
+    suffix: .mustache

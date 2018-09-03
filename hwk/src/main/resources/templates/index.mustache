@@ -1,0 +1,84 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<title>{{ title }}</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<script src="/webjars/jquery/1.12.0/jquery.min.js"></script>
+<script type="text/javascript">
+<!--
+
+class HwVo {
+    constructor(inpStr, grpNum) {
+        this.inpStr = inpStr;
+        this.grpNum = grpNum;
+    }
+}
+
+$(document).ready(function(){
+	
+	$("#btnProc").click(function(){
+		var inp = $.trim($("#txtInp").val());
+		var grp = $.trim($("#txtGrp").val());
+		if(inp.length == 0){
+			alert("'입력'값을 입력하세요.");
+			$("#txtInp").focus();
+			return;
+		}
+		
+		let hwVo = new HwVo(inp, grp);
+		$.ajax({
+			method: "POST",
+			url: "/api",
+			data: JSON.stringify(hwVo),
+	        contentType: 'application/json',
+			dataType: "json"
+		}).done(function(response) {
+			if(response.result1 != null)
+				$("#lblResult1").text(response.result1);
+			else
+				$("#lblResult1").text("");
+			if(response.result2 != null)
+				$("#lblResult2").text(response.result2);
+			else
+				$("#lblResult2").text("");
+		});
+	});
+});
+-->
+</script>
+</head>
+<body>
+
+<table width="600px">
+	<tr>
+		<td width="100px">입력</td>
+		<td width="500px"><textarea id="txtInp" name="txtInp"></textarea></td>
+	</tr>
+	<tr>
+		<td>출력단위묶음</td>
+		<td><input type="text" id="txtGrp" name="txtGrp" onkeyup="this.value=this.value.replace(/[^0-9]/g,'')"/></td>
+	</tr>
+	<tr>
+		<td colspan="2" align="right">
+			<input type="button" id="btnProc" name="btnProc" value="출력" />
+		</td>
+	</tr>
+	<tr>
+		<td>
+		몫 : 
+		</td>
+		<td>
+		<label id="lblResult1"></label>
+		</td>
+	</tr>
+	<tr>
+		<td>
+		나머지 : 
+		</td>
+		<td>
+		<label id="lblResult2"></label>
+		</td>
+	</tr>
+</table>
+</body>
+</html>
